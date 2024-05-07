@@ -17,4 +17,21 @@ public class Arma {
             WVEL = 6;
         }
     }
+
+    public int getWPOW() {
+        return WPOW;
+    }
+
+    public int getWVEL() {
+        return WVEL;
+    }
+
+    public void setWPOW(int wPOW) {
+        WPOW = wPOW;
+    }
+
+    public void setWVEL(int wVEL) {
+        WVEL = wVEL;
+    }
+    
 }
