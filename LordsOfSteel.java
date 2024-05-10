@@ -34,22 +34,25 @@ public class LordsOfSteel {
             System.out.println(p);
         }
 
-        System.out.println("[1] Crear personatge.");
-        System.out.println("[2] Esborrar personatge.");
-        System.out.println("[3] Editar un personatge.");
-        System.out.println("[4] Iniciar un combat.");
-        System.out.println("[5] Sortir");
-
-        int input = sc.nextInt();
-        while (input != 5) {
+        while (true) {
+            System.out.println("[1] Crear personatge.");
+            System.out.println("[2] Esborrar personatge.");
+            System.out.println("[3] Editar un personatge.");
+            System.out.println("[4] Iniciar un combat.");
+            System.out.println("[5] Sortir");
+            int input = sc.nextInt();
+            
             switch (input) {
                 case 1:
                     crearPersonatge();
                     break;
+                case 2:
+                    System.out.println("HOla");
+                    break;
             }
+            break;
         }
         //esborrem
-        personatges.remove(1);
         System.out.println("total personatges: " + personatges.size());
     }
 
@@ -124,6 +127,32 @@ public class LordsOfSteel {
         System.out.println(totalPunts);
 
         System.out.println("Tipus arma: [1] Daga - [2] Espasa - [3] MartellCombat");
+        String[] armes = {"Daga", "Espasa", "MartellCombat"};
         int arma = sc.nextInt();
+        while (arma <1 || arma > 3) {
+            arma = sc.nextInt();
+        }
+
+        switch (tipos[tipo-1]) {
+            case "Huma":
+                personatges.add(new Huma(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                break;
+
+            case "Maia":
+                break;
+            case "Mitja":
+            break;
+            case "Nan":
+                break;
+        }
+        System.out.println("Personatge creat, valors: ");
+        System.out.println("tipus: " + tipos[tipo-1]);
+        System.out.println("nom: " + nom);
+        System.out.println("Força: " + forca);
+        System.out.println("Coneixement: " + con);
+        System.out.println("Velocitat: " + vel);
+        System.out.println("Inteligencia: " + inte);
+        System.out.println("Sort: " + sor);
+        System.out.println("Arma: " + armes[arma-1]);
     }
 }
