@@ -61,67 +61,11 @@ public class LordsOfSteel {
         System.out.println("A continuaciò, hauras de repartir 60 punts " +
                                                                 "d'habilitat");
         System.out.println("entre 5 atributs [min = 3, max= 18]: ");
-        int totalPunts = 0;
-        String error = "Valor invalid, nomès queden per assignar els següents "
-                                                                    + "punts: ";
-        System.out.print("Força: ");
+        int[] stats = new int[5];
+        String[] atributs = {"Força: ","Constitució: ","Velocitat: ", "Inteligencia: ",
+                            "Sort: "};
 
-        int forca = sc.nextInt();   //condicionals sencills per asegurar el rang
-        while (forca < 3 || forca > 18) {
-            System.out.println(error + (60-totalPunts));
-            forca = sc.nextInt();
-        }
-        totalPunts+=forca;
-
-        System.out.print("Constitució: ");
-
-        int con = sc.nextInt();
-        while (con < 3 || con > 18) {
-            System.out.println(error + (60-totalPunts));
-            con = sc.nextInt();
-        }
-
-        totalPunts+=con;
-
-        int atributsRestants = 2; //3 atributs amb 3 punts com a minim
-
-        System.out.print("Velocitat: ");
-        int aux = totalPunts;
-
-        int vel = 0;
-        vel = sc.nextInt();  //arribem a la zona confilctiva on podem quedar-nos sense punts
-        while (vel < 3 || vel > 18 || (60-(aux+vel))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            vel = sc.nextInt();
-        }
-        totalPunts+=vel;
-        atributsRestants--;
-
-        System.out.print("Inteligencia: ");
-        System.out.println(error + (60-totalPunts));
-        aux = totalPunts;
-
-        int inte = sc.nextInt();
-        while (inte < 3 || inte > 18 || (60-(aux+inte))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            inte = sc.nextInt();
-        }
-        totalPunts+=inte;
-        atributsRestants--;
-
-        System.out.print("Sort: ");
-        aux = totalPunts;
-
-        int sor = sc.nextInt();
-        while (sor < 3 || sor > 18 || (60-(aux+sor))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            sor = sc.nextInt();
-        }
-        totalPunts+=sor;
-        atributsRestants--;
+        asignarStats(stats, atributs);
 
         System.out.println("Tipus arma: [1] Daga - [2] Espasa - [3] MartellCombat");
         int arma = sc.nextInt();
@@ -132,40 +76,67 @@ public class LordsOfSteel {
         switch (tipos[tipo-1]) {  //introduïm totes les posibles variables de creacio de personatge
             case "Huma":
                 if (devocio == 1) {
-                    personatges.add(new HumaOrdre(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new HumaOrdre(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 } else
-                    personatges.add(new HumaCaos(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new HumaCaos(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 break;
 
             case "Maia":
                 if (devocio == 1) {
-                    personatges.add(new MaiaOrdre(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new MaiaOrdre(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 } else
-                    personatges.add(new MaiaCaos(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new MaiaCaos(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 break;
             case "Mitja":
                 if (devocio == 1) {
-                    personatges.add(new MitjaOrdre(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new MitjaOrdre(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 } else
-                    personatges.add(new MitjaCaos(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new MitjaCaos(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 break;
             case "Nan":
                 if (devocio == 1) {
-                    personatges.add(new NanOrdre(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new NanOrdre(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 } else
-                    personatges.add(new NanCaos(nom, forca, con, vel, inte, sor, armes[arma-1]));
+                    personatges.add(new NanCaos(nom, stats[0], stats[1], stats[2], stats[3], stats[4], armes[arma-1]));
                 break;
         }
     }
+
+    public static void asignarStats(int[] stats, String[] atributs) {
+        int atributsRestants = 5;
+        int totalPunts = 0;
+        String error = "Valor invalid, nomès queden per assignar els següents "
+                + "punts: ";
+
+            for (int i = 0; i < 5;) {
+
+                System.out.print(atributs[i]);
+                int aux = totalPunts;
+                int n = sc.nextInt();
+
+                while (n < 3 || n > 18 || (60-(aux+n))<atributsRestants*3) {
+                    System.out.println(error + (60-totalPunts));
+                    aux = totalPunts;
+                    n = sc.nextInt();
+                }
+                totalPunts+=n;
+                atributsRestants--;
+                stats[i] = n;
+                i++;
+            }
+        }
 
     public static void esborrarPersonatge(Arma[] armes, ArrayList<Personatge> personatges) {
         mostrarPersonatges(personatges);    //metode per mostrar la llista de personatges
         int n;
         do {
+            System.out.println("[0] Sortir");
             System.out.print("Indica quin personatge vols esborrar: ");
             n = sc.nextInt();
         } while(n > personatges.size() || n < 0);
+        if (n != 0){
         personatges.remove(n-1);
+        }
     }
 
     public static void mostrarPersonatges(ArrayList<Personatge> personatges) {
@@ -181,78 +152,28 @@ public class LordsOfSteel {
             System.out.println("[0] - SORTIR");
             System.out.print("\nSellecciona un personatge a editar: ");
             n = sc.nextInt();
+            
         } while(n > personatges.size() || n < 0);
-        
-        Personatge p = personatges.get(n-1);
+            
+            if (n != 0) {
+            
+            Personatge p = personatges.get(n-1);
+            System.out.println("Seleccionat: " + p.toStringLong());
 
-        System.out.println("A continuaciò, hauras de repartir 60 punts d'habilitat");
-        System.out.println("entre 5 atributs [min = 3, max= 18]: ");
-        int totalPunts = 0;
-        String error = "Valor invalid, nomès queden per assignar els següents punts: ";
-        
-        System.out.print("Força: ");
-        int forca = sc.nextInt();
-        while (forca < 3 || forca > 18) {
-            System.out.println(error + (60-totalPunts));
-            forca = sc.nextInt();
-        }
-        totalPunts+=forca;
+            System.out.println("A continuaciò, hauras de repartir 60 punts d'habilitat");
+            System.out.println("entre 5 atributs [min = 3, max= 18]: ");
+            int[] stats = new int[5];
+            String[] atributs = {"Força: ","Constitució: ","Velocitat: ", "Inteligencia: ",
+                            "Sort: "};
 
-        System.out.print("Constitució: ");
-
-        int con = sc.nextInt();
-        while (con < 3 || con > 18) {
-            System.out.println(error + (60-totalPunts));
-            con = sc.nextInt();
-        }
-
-        totalPunts+=con;
-
-        int atributsRestants = 2; //3 atributs amb 3 punts com a minim
-
-        System.out.print("Velocitat: ");
-        int aux = totalPunts;
-
-        int vel = 0;
-        vel = sc.nextInt();
-        while (vel < 3 || vel > 18 || (60-(aux+vel))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            vel = sc.nextInt();
-        }
-        totalPunts+=vel;
-        atributsRestants--;
-
-        System.out.print("Inteligencia: ");
-        aux = totalPunts;
-
-        int inte = sc.nextInt();
-        while (inte < 3 || inte > 18 || (60-(aux+inte))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            inte = sc.nextInt();
-        }
-        totalPunts+=inte;
-        atributsRestants--;
-
-        System.out.print("Sort: ");
-        aux = totalPunts;
-
-        int sor = sc.nextInt();
-        while (sor < 3 || sor > 18 || (60-(aux+sor))<atributsRestants*3) {
-            System.out.println(error + (60-totalPunts));
-            aux = totalPunts;
-            sor = sc.nextInt();
-        }
-        totalPunts+=sor;
-        atributsRestants--;
-
-        //a continuacio donem els valors corrsponents
-        p.setFOR(forca);
-        p.setCON(con);
-        p.setVEL(vel);
-        p.setINT(inte);
-        p.setSOR(sor);
+            asignarStats(stats, atributs);
+            //a continuacio donem els valors corrsponents
+            p.setFOR(stats[0]);
+            p.setCON(stats[1]);
+            p.setVEL(stats[2]);
+            p.setINT(stats[3]);
+            p.setSOR(stats[4]);
+            }
     }
 
     public static void combatir(Arma[] armes, ArrayList<Personatge> personatges){
