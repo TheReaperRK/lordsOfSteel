@@ -7,10 +7,14 @@ public class HumaCaos extends Huma implements Caos{
 
     @Override
     public int contraatacar() {
-        if (Dau.tirada() <= PA){
+        if (Dau.tirada() <= PA*0.6){
             return 1;
         } return 0;
     }
-    
+
+    @Override
+    public String toString() {
+        return super.toString() + "[Caos] LVL - " + NIV;
+    }
     
 }

@@ -16,8 +16,9 @@ public class LordsOfSteel {
         personatges.add(new NanCaos("Gimli", 14, 8, 7, 1, 9, armes[1]));
         personatges.add(new HumaOrdre("Charli", 10, 11, 12, 13, 14, armes[1]));
         personatges.add(new MitjaOrdre("sirlin", 10, 11, 12, 13, 14, armes[2]));
+        //personatges definits per la maquina
 
-        int input;
+        int input;  //menu en bucle fins introduior un 5
         do {
             System.out.println("[1] Crear personatge.");
             System.out.println("[2] Esborrar personatge.");
@@ -38,12 +39,14 @@ public class LordsOfSteel {
                     break;
                 case 4:
                     combatir(armes, personatges);
+                    break;
             }
-            break;
-        } while (input == 5);
+        } while (input != 5);
     }
 
-    public static void crearPersonatge(Arma[] armes, ArrayList<Personatge> personatges) {
+    public static void crearPersonatge  (Arma[] armes,
+                                        ArrayList<Personatge> personatges) {
+
         String[] tipos = {"Huma","Maia", "Mitja","Nan"};
         String[] dev = {"Ordre", "Caos"}; //devocio
 
@@ -55,22 +58,26 @@ public class LordsOfSteel {
         sc.nextLine();
         System.out.println("Introdueix el nom: ");
         String nom = sc.nextLine();
-        System.out.println("A continuaciò, hauras de repartir 60 punts d'habilitat");
+        System.out.println("A continuaciò, hauras de repartir 60 punts " +
+                                                                "d'habilitat");
         System.out.println("entre 5 atributs [min = 3, max= 18]: ");
         int totalPunts = 0;
-        String error = "Valor invalid, nomès queden per assignar els següents punts: ";
+        String error = "Valor invalid, nomès queden per assignar els següents "
+                                                                    + "punts: ";
         System.out.print("Força: ");
 
-        int forca = sc.nextInt();
+        int forca = sc.nextInt();   //condicionals sencills per asegurar el rang
         while (forca < 3 || forca > 18) {
+            System.out.println(error + (60-totalPunts));
             forca = sc.nextInt();
         }
         totalPunts+=forca;
 
-        System.out.print("Coneixement: ");
+        System.out.print("Constitució: ");
 
         int con = sc.nextInt();
         while (con < 3 || con > 18) {
+            System.out.println(error + (60-totalPunts));
             con = sc.nextInt();
         }
 
@@ -82,7 +89,7 @@ public class LordsOfSteel {
         int aux = totalPunts;
 
         int vel = 0;
-        vel = sc.nextInt();
+        vel = sc.nextInt();  //arribem a la zona confilctiva on podem quedar-nos sense punts
         while (vel < 3 || vel > 18 || (60-(aux+vel))<atributsRestants*3) {
             System.out.println(error + (60-totalPunts));
             aux = totalPunts;
@@ -92,6 +99,7 @@ public class LordsOfSteel {
         atributsRestants--;
 
         System.out.print("Inteligencia: ");
+        System.out.println(error + (60-totalPunts));
         aux = totalPunts;
 
         int inte = sc.nextInt();
@@ -115,15 +123,13 @@ public class LordsOfSteel {
         totalPunts+=sor;
         atributsRestants--;
 
-        System.out.println(totalPunts);
-
         System.out.println("Tipus arma: [1] Daga - [2] Espasa - [3] MartellCombat");
         int arma = sc.nextInt();
         while (arma <1 || arma > 3) {
             arma = sc.nextInt();
         }
 
-        switch (tipos[tipo-1]) {
+        switch (tipos[tipo-1]) {  //introduïm totes les posibles variables de creacio de personatge
             case "Huma":
                 if (devocio == 1) {
                     personatges.add(new HumaOrdre(nom, forca, con, vel, inte, sor, armes[arma-1]));
@@ -150,24 +156,16 @@ public class LordsOfSteel {
                     personatges.add(new NanCaos(nom, forca, con, vel, inte, sor, armes[arma-1]));
                 break;
         }
-        System.out.println("Personatge creat, valors: ");
-        System.out.println("tipus: " + tipos[tipo-1]);
-        System.out.println("Devoció: " + dev[devocio-1]);
-        System.out.println("nom: " + nom);
-        System.out.println("Força: " + forca);
-        System.out.println("Coneixement: " + con);
-        System.out.println("Velocitat: " + vel);
-        System.out.println("Inteligencia: " + inte);
-        System.out.println("Sort: " + sor);
-        System.out.println("Arma: " + armes[arma-1]);
     }
 
     public static void esborrarPersonatge(Arma[] armes, ArrayList<Personatge> personatges) {
-        mostrarPersonatges(personatges);
-        System.out.print("Indica quin personatge vols esborrar: ");
-        int n = sc.nextInt();
-
-        personatges.remove(n);
+        mostrarPersonatges(personatges);    //metode per mostrar la llista de personatges
+        int n;
+        do {
+            System.out.print("Indica quin personatge vols esborrar: ");
+            n = sc.nextInt();
+        } while(n > personatges.size() || n < 0);
+        personatges.remove(n-1);
     }
 
     public static void mostrarPersonatges(ArrayList<Personatge> personatges) {
@@ -177,10 +175,13 @@ public class LordsOfSteel {
     }
 
     public static void editarPersonatge(ArrayList<Personatge> personatges) {
-        mostrarPersonatges(personatges);
-        System.out.print("Sellecciona un personatge a editar: ");
-        int n = sc.nextInt();
-        Personatge p = personatges.get(n);
+        mostrarPersonatges(personatges); // metode molt semblant al de la creacio de personatges
+        int n;
+        do {
+            System.out.print("Sellecciona un personatge a editar: ");
+            n = sc.nextInt();
+        } while(n > personatges.size() || n < 0);
+        Personatge p = personatges.get(n-1);
 
         System.out.println("A continuaciò, hauras de repartir 60 punts d'habilitat");
         System.out.println("entre 5 atributs [min = 3, max= 18]: ");
@@ -190,14 +191,16 @@ public class LordsOfSteel {
         System.out.print("Força: ");
         int forca = sc.nextInt();
         while (forca < 3 || forca > 18) {
+            System.out.println(error + (60-totalPunts));
             forca = sc.nextInt();
         }
         totalPunts+=forca;
 
-        System.out.print("Coneixement: ");
+        System.out.print("Constitució: ");
 
         int con = sc.nextInt();
         while (con < 3 || con > 18) {
+            System.out.println(error + (60-totalPunts));
             con = sc.nextInt();
         }
 
@@ -266,10 +269,10 @@ public class LordsOfSteel {
             mostrarPersonatges(personatges);
             System.out.println("Selecciona un personatge [player 2]");
             p2 = sc.nextInt();
-        } while (p2 == p1 || p2 > personatges.size() || p2 < 0);
+        } while (p2 == p1 || p2 > personatges.size() || p2 < 0); //comprovo que no estigui repetit
         Personatge player2 = personatges.get(p2-1);
         
-        int saludP1 = player1.getPS(), saludP2 = player2.getPS();
+        int saludP1 = player1.getPS(), saludP2 = player2.getPS(); //amb aixo m'estalvio haber de reiniciar els ps
 
         while (saludP1 > 0 && saludP2 > 0) {
             if (turno) {
@@ -280,33 +283,33 @@ public class LordsOfSteel {
                 int ataque = player1.atacar();
                 System.out.print(player2);
                 int defensa = player2.defensar();
-                if (ataque == 1 && ataque > defensa) {
+                if (ataque == 1 && ataque > defensa) { //calculo si l'atac es true y que la defensa es false
                     System.out.println(player1 + " ataca [DMG = " +
                                                     player1.getPD()+ "]");
                     saludP2 -= player1.getPD();
-                    if (player1 instanceof Ordre) {
+                    if (player1 instanceof Ordre) { // si ataca y es interfaç ordre es cura amb devocio
                         System.out.print(player1+" Es cura amb devoció [HLTH ");
                         System.out.print(saludP1 + " -> ");
                         saludP1 += player1.restaurarSalud();
                         System.out.println(saludP1 + "]");
                     }
-                    System.out.println(saludP2);
+                    System.out.println(saludP2);    //si el jugador dos reb un atac te possibilitat de defensar-se
                     if (player2 instanceof Caos) {
-                        int contraatacar = player2.contraatacar();
+                        int contraatacar = player2.contraatacar(); //torna un valor 1 o 0 sent 1 true
                         if (contraatacar == 1){
                             System.out.println(player2+ "Contraataca amb " +
-                            "devoció [DMG = " + (int)(player2.getPD()*0.4) + "]");
-                            saludP1 -= player2.getPD()*0.4;
+                            "devoció [DMG = " + (int)(player2.getPD()) + "]");
+                            saludP1 -= player2.getPD();
                         }
                     }
                 } else if (ataque == defensa) {
                     System.out.println(player2 + " ha evitat l'atac");
-                } else {
+                } else {                                                //ataca o evita l'atac
                     System.out.println(player1 + " no encerta l'atac");
                 }
             } else {
                 System.out.println("Torn del jugador 2 ("+ player2.getNom() +
-                                                                        ")");
+                                                                        ")"); //es el mateix codi en sentit contarri
                 turno = true;
                 System.out.print(player2);
                 int ataque = player2.atacar();
@@ -328,9 +331,9 @@ public class LordsOfSteel {
                         int contraatacar = player1.contraatacar();
                         System.out.println(contraatacar);
                         if (contraatacar == 1){
-                            System.out.println(player1+ "Contraataca amb " +
-                            "devoció [DMG = " + (int)(player1.getPD()*0.4) + "]");
-                            saludP2 -= player1.getPD()*0.4;
+                            System.out.println(player1+ " Contraataca amb " +
+                            "devoció [DMG = " + (int)(player1.getPD()) + "]");
+                            saludP2 -= player1.getPD();
                         }
                     }
                 } else if (ataque == defensa) {
@@ -339,9 +342,20 @@ public class LordsOfSteel {
                     System.out.println(player2 + " no encerta l'atac");
                 }
             }
-            if (saludP1 < 0) {
+            if (saludP1 < 0) { //si guanya el p1 fa tot el proces de pujar exp i comunicar-lo
                 System.out.println(player2 + " Guanya el combat [Exp + " +
                 player1.getPS() + "]");
+                int EXP = player2.getPEX();
+                player2.setPEX(EXP+=player1.getPS());
+                System.out.println("TOTAL EXP = " + player2.getPEX());
+                player2.actualizarNivell();
+            } else if (saludP2 < 0) {   //el mateix pero el p2
+                System.out.println(player1 + " Guanya el combat [Exp + " +
+                player2.getPS() + "]");
+                int EXP = player1.getPEX();
+                player1.setPEX(EXP+=player2.getPS());
+                System.out.println("TOTAL EXP = " + player1.getPEX());
+                player1.actualizarNivell();
             }
         }
     }

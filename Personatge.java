@@ -12,7 +12,7 @@ public abstract class Personatge {
     protected int PA;
     protected int PE;
 
-    protected int NIV = 0;
+    protected int NIV = 1;
     protected int PEX = 0;
 
     protected Arma arma;
@@ -161,41 +161,46 @@ public abstract class Personatge {
         return -1;
     }
 
-    public void actualitzarAtributs() {
-        this.FOR = (FOR + (1*NIV) > 18) ? 18 : FOR;
-        this.CON = (CON + (1*NIV) > 18) ? 18 : CON;
-        this.VEL = (VEL + (1*NIV) > 18) ? 18 : VEL;
-        this.INT = (INT + (1*NIV) > 18) ? 18 : INT;
-        this.SOR = (SOR + (1*NIV) > 18) ? 18 : SOR;
-    }
-
     public void actualizarNivell() {
         switch (NIV) {
             case 1:
                 if (PEX >=100) {
+                    System.out.println("Pujada de nivell [1 -> 2]");
                     PEX -=100;
                     NIV++;
+                    calcularAtributos();
                 }
                 break;
             case 2:
                 if (PEX >= 200) {
+                    System.out.println("Pujada de nivell [2 -> 3]");
                     PEX -=200;
                     NIV++;
+                    calcularAtributos();
                 }
                 break;
             case 3:
                 if (PEX >= 400) {
+                    System.out.println("Pujada de nivell [3 -> 4]");
                     PEX -=400;
                     NIV++;
+                    calcularAtributos();
                 }
                 break;
             case 4:
                 if (PEX >= 500) {
+                    System.out.println("Pujada de nivell [4 -> 5]");
                     PEX -=500;
                     NIV++;
+                    calcularAtributos();
                 }
                 break;
             case 5:
+                if (PEX >= 800) {
+                    System.out.println("Pujada de nivell [5 -> MAX]");
+                    NIV++;
+                    calcularAtributos();
+                }
                 break;
         }
     }
