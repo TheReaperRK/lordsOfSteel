@@ -11,4 +11,12 @@ public class NanCaos extends Nan implements Caos{
         } return 0;
     }
     
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    public String toStringLong() {
+        return toString()  + "[Caos] LVL -> " + NIV;
+    }
 }

@@ -170,7 +170,7 @@ public class LordsOfSteel {
 
     public static void mostrarPersonatges(ArrayList<Personatge> personatges) {
         for (Personatge p : personatges){
-            System.out.println(p);
+            System.out.println(p.toStringLong());
         }
     }
 
@@ -178,9 +178,11 @@ public class LordsOfSteel {
         mostrarPersonatges(personatges); // metode molt semblant al de la creacio de personatges
         int n;
         do {
-            System.out.print("Sellecciona un personatge a editar: ");
+            System.out.println("[0] - SORTIR");
+            System.out.print("\nSellecciona un personatge a editar: ");
             n = sc.nextInt();
         } while(n > personatges.size() || n < 0);
+        
         Personatge p = personatges.get(n-1);
 
         System.out.println("A continuaciò, hauras de repartir 60 punts d'habilitat");
@@ -260,7 +262,7 @@ public class LordsOfSteel {
         int p2 = -1, p1 = -1; //inicialitzo a un valor inusual
         do {
             mostrarPersonatges(personatges);
-            System.out.print("Selecciona un personatge [player 1]: ");
+            System.out.print("\nSelecciona un personatge [player 1]: ");
             p1 = sc.nextInt();
         } while (p1 > personatges.size() || p1 < 0);
         Personatge player1 = personatges.get(p1-1);

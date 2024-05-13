@@ -13,7 +13,11 @@ public class MitjaCaos extends Mitja implements Caos{
     
     @Override
     public String toString() {
-        return super.toString() + "[Caos] LVL - " + NIV;
+        return super.toString();
+    }
+
+    public String toStringLong() {
+        return toString()  + "[Caos] LVL -> " + NIV;
     }
     
 }

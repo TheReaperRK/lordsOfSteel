@@ -153,11 +153,11 @@ public abstract class Personatge {
         } return 0;
     }
 
-    public int contraatacar(){
-        return -1;
+    public int contraatacar(){ //creat per obligacio del codi (no es te en compte)
+        return -1; //inizializo de forma inusual
     }
 
-    public int restaurarSalud() {
+    public int restaurarSalud() {//creat per obligacio del codi (no es te en compte)
         return -1;
     }
 
@@ -203,5 +203,9 @@ public abstract class Personatge {
                 }
                 break;
         }
+    }
+
+    public String toStringLong(){ //aquest valor es sobreescriura amb override
+        return " ";
     }
 }

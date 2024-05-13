@@ -9,4 +9,12 @@ public class MaiaOrdre extends Maia implements Ordre{
         return (int)(PS * 0.12);
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    public String toStringLong() {
+        return toString()  + "[Ordre] LVL -> " + NIV;
+    }
 }
