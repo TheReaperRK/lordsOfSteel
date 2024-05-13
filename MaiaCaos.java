@@ -4,5 +4,12 @@ public class MaiaCaos extends Maia implements Caos {
         super(nom, fOR, cON, vEL, iNT, sOR, arma);
         //TODO Auto-generated constructor stub
     }
+
+    @Override
+    public int contraatacar() {
+        if (Dau.tirada() <= PA){
+            return 1;
+        } return 0;
+    }
     
 }

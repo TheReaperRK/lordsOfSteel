@@ -12,12 +12,12 @@ public class LordsOfSteel {
                     new Arma(TipusArma.MARTELLCOMBAT)}; // arma 2
 
         ArrayList<Personatge> personatges = new ArrayList<Personatge>();
-        personatges.add(new MaiaOrdre("Pakal", 10, 11, 12, 13, 14, armes[0]));
-        personatges.add(new NanOrdre("Gimli", 10, 11, 12, 13, 14, armes[1]));
-        personatges.add(new HumaCaos("Charli", 10, 11, 12, 13, 14, armes[1]));
-        personatges.add(new MitjaCaos("sirlin", 10, 11, 12, 13, 14, armes[2]));
+        personatges.add(new MaiaCaos("Pakal", 5, 6, 5, 7, 10, armes[0]));
+        personatges.add(new NanCaos("Gimli", 14, 8, 7, 1, 9, armes[1]));
+        personatges.add(new HumaOrdre("Charli", 10, 11, 12, 13, 14, armes[1]));
+        personatges.add(new MitjaOrdre("sirlin", 10, 11, 12, 13, 14, armes[2]));
 
-        int input; 
+        int input;
         do {
             System.out.println("[1] Crear personatge.");
             System.out.println("[2] Esborrar personatge.");
@@ -33,7 +33,6 @@ public class LordsOfSteel {
                 case 2:
                     esborrarPersonatge(armes, personatges);
                     break;
-
                 case 3:
                     editarPersonatge(personatges);
                     break;
@@ -42,12 +41,11 @@ public class LordsOfSteel {
             }
             break;
         } while (input == 5);
-        //esborrem
-        System.out.println("total personatges: " + personatges.size());
     }
 
     public static void crearPersonatge(Arma[] armes, ArrayList<Personatge> personatges) {
         String[] tipos = {"Huma","Maia", "Mitja","Nan"};
+        String[] dev = {"Ordre", "Caos"}; //devocio
 
         System.out.println("[1] Huma - [2] Maia - [3] Mitja - [4] Nan");
         System.out.println("Selecciona el tipus del personatge: ");
@@ -154,6 +152,7 @@ public class LordsOfSteel {
         }
         System.out.println("Personatge creat, valors: ");
         System.out.println("tipus: " + tipos[tipo-1]);
+        System.out.println("Devoció: " + dev[devocio-1]);
         System.out.println("nom: " + nom);
         System.out.println("Força: " + forca);
         System.out.println("Coneixement: " + con);
@@ -252,8 +251,98 @@ public class LordsOfSteel {
     }
 
     public static void combatir(Arma[] armes, ArrayList<Personatge> personatges){
+        System.out.println("=== INICIA EL COMBAT ===\n");
+        boolean turno = true; //variable per fer canvis de torn
+
+        int p2 = -1, p1 = -1; //inicialitzo a un valor inusual
+        do {
+            mostrarPersonatges(personatges);
+            System.out.print("Selecciona un personatge [player 1]: ");
+            p1 = sc.nextInt();
+        } while (p1 > personatges.size() || p1 < 0);
+        Personatge player1 = personatges.get(p1-1);
+
+        do {
+            mostrarPersonatges(personatges);
+            System.out.println("Selecciona un personatge [player 2]");
+            p2 = sc.nextInt();
+        } while (p2 == p1 || p2 > personatges.size() || p2 < 0);
+        Personatge player2 = personatges.get(p2-1);
         
+        int saludP1 = player1.getPS(), saludP2 = player2.getPS();
+
+        while (saludP1 > 0 && saludP2 > 0) {
+            if (turno) {
+                System.out.println("Torn del jugador 1 ("+ player1.getNom() +
+                                                                        ")");
+                turno = false;
+                System.out.print(player1);
+                int ataque = player1.atacar();
+                System.out.print(player2);
+                int defensa = player2.defensar();
+                if (ataque == 1 && ataque > defensa) {
+                    System.out.println(player1 + " ataca [DMG = " +
+                                                    player1.getPD()+ "]");
+                    saludP2 -= player1.getPD();
+                    if (player1 instanceof Ordre) {
+                        System.out.print(player1+" Es cura amb devoció [HLTH ");
+                        System.out.print(saludP1 + " -> ");
+                        saludP1 += player1.restaurarSalud();
+                        System.out.println(saludP1 + "]");
+                    }
+                    System.out.println(saludP2);
+                    if (player2 instanceof Caos) {
+                        int contraatacar = player2.contraatacar();
+                        if (contraatacar == 1){
+                            System.out.println(player2+ "Contraataca amb " +
+                            "devoció [DMG = " + (int)(player2.getPD()*0.4) + "]");
+                            saludP1 -= player2.getPD()*0.4;
+                        }
+                    }
+                } else if (ataque == defensa) {
+                    System.out.println(player2 + " ha evitat l'atac");
+                } else {
+                    System.out.println(player1 + " no encerta l'atac");
+                }
+            } else {
+                System.out.println("Torn del jugador 2 ("+ player2.getNom() +
+                                                                        ")");
+                turno = true;
+                System.out.print(player2);
+                int ataque = player2.atacar();
+                System.out.print(player1);
+                int defensa = player1.defensar();
+                if (ataque == 1 && ataque > defensa) {
+
+                    System.out.println(player2 + " ataca [DMG = " +
+                                                    player2.getPD()+ "]");
+                    saludP1 -= player2.getPD();
+                    if (player2 instanceof Ordre) {
+                        System.out.print(player2+" Es cura amb devoció [HLTH ");
+                        System.out.print(saludP2 + " -> ");
+                        saludP2 += player2.restaurarSalud();
+                        System.out.println(saludP2 + "]");
+                    }
+                    System.out.println(saludP1);
+                    if (player1 instanceof Caos) {
+                        int contraatacar = player1.contraatacar();
+                        System.out.println(contraatacar);
+                        if (contraatacar == 1){
+                            System.out.println(player1+ "Contraataca amb " +
+                            "devoció [DMG = " + (int)(player1.getPD()*0.4) + "]");
+                            saludP2 -= player1.getPD()*0.4;
+                        }
+                    }
+                } else if (ataque == defensa) {
+                    System.out.println(player1 + " ha evitat l'atac");
+                } else {
+                    System.out.println(player2 + " no encerta l'atac");
+                }
+            }
+            if (saludP1 < 0) {
+                System.out.println(player2 + " Guanya el combat [Exp + " +
+                player1.getPS() + "]");
+            }
+        }
     }
 }
-
- 

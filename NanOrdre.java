@@ -4,5 +4,9 @@ public class NanOrdre extends Nan implements Ordre {
         super(nom, fOR, cON, vEL, iNT, sOR, arma);
         //TODO Auto-generated constructor stub
     }
+
+    public int restaurarSalud() {
+        return (int)(PS * 0.12);
+    }
     
 }

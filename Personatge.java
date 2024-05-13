@@ -18,12 +18,12 @@ public abstract class Personatge {
     protected Arma arma;
 
     public Personatge(String nom, int fOR, int cON, int vEL, int iNT, int sOR, Arma arma) {
-        this.nom = nom + (1*NIV);
-        this.FOR = fOR + (1*NIV);
-        this.CON = cON + (1*NIV);
-        this.VEL = vEL + (1*NIV);
-        this.INT = iNT + (1*NIV);
-        this.SOR = sOR + (1*NIV);
+        this.nom = nom;
+        this.FOR = fOR;
+        this.CON = cON;
+        this.VEL = vEL;
+        this.INT = iNT;
+        this.SOR = sOR;
         this.arma = arma;
 
         calcularAtributos();
@@ -135,4 +135,68 @@ public abstract class Personatge {
         return nom;
     }
 
+    public int atacar() {
+        int tirada = Dau.tirada();
+        System.out.println(" ha tret un " + tirada);
+
+        if (tirada <= PA){
+            return 1;
+        } return 0;
+    }
+
+    public int defensar() {
+        int tirada = Dau.tirada();
+        System.out.println(" ha tret un " + tirada);
+
+        if (tirada <= PE){
+            return 1;
+        } return 0;
+    }
+
+    public int contraatacar(){
+        return -1;
+    }
+
+    public int restaurarSalud() {
+        return -1;
+    }
+
+    public void actualitzarAtributs() {
+        this.FOR = (FOR + (1*NIV) > 18) ? 18 : FOR;
+        this.CON = (CON + (1*NIV) > 18) ? 18 : CON;
+        this.VEL = (VEL + (1*NIV) > 18) ? 18 : VEL;
+        this.INT = (INT + (1*NIV) > 18) ? 18 : INT;
+        this.SOR = (SOR + (1*NIV) > 18) ? 18 : SOR;
+    }
+
+    public void actualizarNivell() {
+        switch (NIV) {
+            case 1:
+                if (PEX >=100) {
+                    PEX -=100;
+                    NIV++;
+                }
+                break;
+            case 2:
+                if (PEX >= 200) {
+                    PEX -=200;
+                    NIV++;
+                }
+                break;
+            case 3:
+                if (PEX >= 400) {
+                    PEX -=400;
+                    NIV++;
+                }
+                break;
+            case 4:
+                if (PEX >= 500) {
+                    PEX -=500;
+                    NIV++;
+                }
+                break;
+            case 5:
+                break;
+        }
+    }
 }

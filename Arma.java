@@ -22,6 +22,23 @@ public class Arma {
         return WPOW;
     }
 
+    @Override
+    public String toString() {
+        switch (tipusArma) {
+            case DAGA:
+                return "Daga";
+                
+            case ESPASA:
+                return "Espasa";
+
+            case MARTELLCOMBAT:
+                return "Martell de combat";
+
+            default:
+                return "No definida";
+        }
+    }
+
     public int getWVEL() {
         return WVEL;
     }

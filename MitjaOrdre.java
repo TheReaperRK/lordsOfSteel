@@ -4,5 +4,10 @@ public class MitjaOrdre extends Mitja implements Ordre {
         super(nom, fOR, cON, vEL, iNT, sOR, arma);
         //TODO Auto-generated constructor stub
     }
+
+    @Override
+    public int restaurarSalud() {
+        return (int)(PS * 0.12);
+    }
     
 }
