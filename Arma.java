@@ -33,19 +33,5 @@ public class Arma {
     public void setWVEL(int wVEL) {
         WVEL = wVEL;
     }
-
-    @Override
-    public String toString() {
-        switch (tipusArma) {
-            case DAGA:
-                return "Daga";
-            case ESPASA:
-                return "Espasa";
-            case MARTELLCOMBAT:
-                return "Martell de combat";
-            default:
-            return "arma";
-        }
-    }
-
+    
 }

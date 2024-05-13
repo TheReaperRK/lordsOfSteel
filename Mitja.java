@@ -8,4 +8,20 @@ public class Mitja extends Personatge{
         
         return super.toString() + " (Mitja)";
     }
+    @Override
+    protected void calcularAtributos() {
+        
+        PS = CON + FOR;
+        
+        // Calcular PD
+        PD = (FOR + arma.getWPOW()) / 3;
+        
+        // Calcular PA
+        PA = INT + SOR + arma.getWVEL();
+        
+        // Calcular PE
+        PE = VEL + SOR + INT + FOR;
+    }
+
+    
 }

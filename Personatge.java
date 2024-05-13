@@ -1,4 +1,4 @@
-public class Personatge {
+public abstract class Personatge {
     
     protected String nom;
     protected int FOR;
@@ -12,20 +12,39 @@ public class Personatge {
     protected int PA;
     protected int PE;
 
+    protected int NIV = 0;
+    protected int PEX = 0;
+
     protected Arma arma;
 
     public Personatge(String nom, int fOR, int cON, int vEL, int iNT, int sOR, Arma arma) {
-        this.nom = nom;
-        this.FOR = fOR;
-        this.CON = cON;
-        this.VEL = vEL;
-        this.INT = iNT;
-        this.SOR = sOR;
+        this.nom = nom + (1*NIV);
+        this.FOR = fOR + (1*NIV);
+        this.CON = cON + (1*NIV);
+        this.VEL = vEL + (1*NIV);
+        this.INT = iNT + (1*NIV);
+        this.SOR = sOR + (1*NIV);
         this.arma = arma;
 
         calcularAtributos();
     }
     
+    public int getNIV() {
+        return NIV;
+    }
+
+    public void setNIV(int nIV) {
+        NIV = nIV;
+    }
+
+    public int getPEX() {
+        return PEX;
+    }
+
+    public void setPEX(int pEX) {
+        PEX = pEX;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -95,7 +114,7 @@ public class Personatge {
         PE = pE;
     }
 
-    // calcular los atributos adicionales
+    // calcular els atributs adicionals
     protected void calcularAtributos() {
         // Calcular PS
         PS = CON + FOR;
@@ -104,7 +123,7 @@ public class Personatge {
         PD = (FOR + arma.getWPOW()) / 3;
         
         // Calcular PA
-        PA = INT + SOR + VEL;
+        PA = INT + SOR + arma.getWVEL();
         
         // Calcular PE
         PE = VEL + SOR + INT;

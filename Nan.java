@@ -8,4 +8,20 @@ public class Nan extends Personatge{
         
         return super.toString() + " (Nan)";
     }
+    @Override
+    protected void calcularAtributos() {
+        
+        PS = CON + FOR;
+        
+        // Calcular PD
+        PD = (FOR + arma.getWPOW() + CON) / 3;
+        
+        // Calcular PA
+        PA = INT + SOR + arma.getWVEL();
+        
+        // Calcular PE
+        PE = VEL + SOR + INT;
+    }
+
+    
 }
